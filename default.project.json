@@ -1,0 +1,21 @@
+{
+  "name": "WoodcutterTycoon",
+  "globIgnorePaths": ["**/.vscode/**", "**/*.spec.luau"],
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "Shared": { "$path": "src/shared" },
+      "Packages": { "$path": "Packages" },
+      "Assets": { "$className": "Folder" },
+      "Animations": { "$className": "Folder" }
+    },
+    "ServerScriptService": {
+      "Server": { "$path": "src/server" }
+    },
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "Client": { "$path": "src/client" }
+      }
+    }
+  }
+}

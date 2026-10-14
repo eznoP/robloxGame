@@ -1,0 +1,15 @@
+[package]
+name = "enzor/woodcutter-tycoon"
+version = "0.1.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+license = "MIT"
+
+# Dependências externas resolvidas pelo Wally.
+# Versões confirmadas por `wally install` — qualquer uma que não resolver é
+# ajustada aqui antes de ser usada no código.
+[dependencies]
+Fusion = "elttob/fusion@0.2.0"
+Promise = "evaera/promise@4.0.0"
+
+[dev-dependencies]
