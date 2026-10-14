@@ -49,5 +49,13 @@ stylua src                            # formata
 
 ## Status
 
-**Fase 0 — Setup & Foundation** (em andamento): toolchain, estrutura, libs core
-(EventBus, Maid, ObjectPool). Fases seguintes no cronograma do plano (12 semanas).
+- **Fase 0 — Setup & Foundation** ✅ toolchain, estrutura, libs core, camada de dados (ProfileService), CI
+- **Fase 1 — Tree System** ✅ spawn por bioma, corte server-authoritative, queda, drops, respawn, gate de tier
+- **Fase 2 — Axe & Crafting** ✅ 7 machados, craft/equip, mesa de craft, menu Fusion
+- **Fase 3 — Pet System** ✅ pets geométricos, drop ponderado, equip + follow, multiplicador de madeira, UI
+- **Fase 4 — Progression & Tutorial** ⬜
+- **Fase 5 — Polish (UI/VFX/Áudio)** ⬜
+- **Fase 6 — Modeling & Assets** ⬜ (hoje: Parts procedurais; meshes com LOD aqui)
+- **Fase 7 — Integração & Balance** ⬜
+
+Controles atuais: clique = cortar · **E** na mesa = craftar · **C** = menu de craft · **P** = menu de pets.
