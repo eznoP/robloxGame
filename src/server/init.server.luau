@@ -1,17 +1,11 @@
 --!strict
 --!optimize 2
 -- Woodcutter Tycoon — bootstrap do servidor.
--- Fase 0: apenas confirma que a árvore Rojo sincronizou e os módulos resolvem.
--- Os sistemas (Tree, Axe, Pet, Biome, Progression, Economy) são inicializados
--- aqui a partir da Fase 1.
+-- Inicializa os serviços na ordem de dependência. Os sistemas de jogo (Tree, Axe,
+-- Pet, Biome, Progression, Economy) entram aqui conforme cada fase.
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local DataService = require(script.data.DataService)
 
-local Shared = ReplicatedStorage:WaitForChild("Shared")
-local EventBus = require(Shared.utils.EventBus)
+DataService.Init()
 
-local bus = EventBus.new()
-bus:on("ServerReady", function()
-	print("[WoodcutterTycoon] Server pronto.")
-end)
-bus:emit("ServerReady")
+print("[WoodcutterTycoon] Server pronto.")
