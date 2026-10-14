@@ -27,7 +27,7 @@ local Configs: { [Types.AxeId]: Types.AxeConfig } = {
 		displayName = "Machado de Madeira",
 		damage = 2,
 		swingSpeed = 1.1,
-		requiredLevel = 3,
+		requiredLevel = 1,
 		craftCost = { wood_log = 50 },
 		visualTier = 2,
 		criticalChance = 0.03,

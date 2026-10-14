@@ -60,7 +60,6 @@ local trees: { [Model]: TreeState } = {}
 local lastChop: { [Player]: number } = {}
 local treesFolder: Folder
 local woodFolder: Folder
-local axeTemplate: Tool
 
 -- Procura o bioma de uma árvore (primeiro da whitelist) para escolher a paleta.
 local function paletteFor(config: Types.TreeConfig): TreeFactory.Palette
@@ -321,100 +320,6 @@ function register(config: Types.TreeConfig, cframe: CFrame)
 	CollectionService:AddTag(model, TAG)
 end
 
--- Machado de graveto temporário (sem script; o cliente trata o Activated).
-local function buildAxeTemplate(): Tool
-	local tool = Instance.new("Tool")
-	tool.Name = "Axe"
-	tool.ToolTip = "Clique perto de uma árvore para cortar"
-	tool.CanBeDropped = false
-	tool.Grip = CFrame.new(0, -1.0, 0)
-	CollectionService:AddTag(tool, "Axe")
-
-	local function piece(
-		name: string,
-		size: Vector3,
-		cf: CFrame,
-		color: Color3,
-		material: Enum.Material
-	): BasePart
-		local p = Instance.new("Part")
-		p.Name = name
-		p.Size = size
-		p.CFrame = cf -- offset local; o Handle fica na origem e as welds travam o relativo
-		p.Color = color
-		p.Material = material
-		p.Anchored = false
-		p.CanCollide = false
-		p.Massless = true
-		p.Parent = tool
-		return p
-	end
-
-	local handle = piece(
-		"Handle",
-		Vector3.new(0.32, 3.4, 0.32),
-		CFrame.new(),
-		Color3.fromRGB(150, 104, 62),
-		Enum.Material.Wood
-	)
-	handle.Massless = false
-
-	local parts = {
-		piece(
-			"Grip",
-			Vector3.new(0.4, 0.9, 0.4),
-			CFrame.new(0, -1.15, 0),
-			Color3.fromRGB(196, 62, 54),
-			Enum.Material.SmoothPlastic
-		),
-		piece(
-			"HeadEye",
-			Vector3.new(0.5, 0.75, 0.6),
-			CFrame.new(0, 1.25, 0),
-			Color3.fromRGB(96, 102, 114),
-			Enum.Material.Metal
-		),
-		piece(
-			"Blade",
-			Vector3.new(0.22, 1.25, 0.95),
-			CFrame.new(0, 1.25, -0.72),
-			Color3.fromRGB(205, 212, 222),
-			Enum.Material.Metal
-		),
-		piece(
-			"BladeEdge",
-			Vector3.new(0.1, 1.45, 0.3),
-			CFrame.new(0, 1.25, -1.3),
-			Color3.fromRGB(240, 244, 250),
-			Enum.Material.Metal
-		),
-	}
-	for _, p in parts do
-		local weld = Instance.new("WeldConstraint")
-		weld.Part0 = handle
-		weld.Part1 = p
-		weld.Parent = p
-	end
-	return tool
-end
-
-local function giveAxe(player: Player)
-	local function grant(character: Model)
-		local backpack = player:FindFirstChildOfClass("Backpack")
-		if
-			backpack
-			and not backpack:FindFirstChild("Axe")
-			and not character:FindFirstChild("Axe")
-		then
-			axeTemplate:Clone().Parent = backpack
-		end
-	end
-	if player.Character then
-		grant(player.Character)
-	end
-	player.CharacterAdded:Connect(grant)
-end
-
 -- Núcleo server-authoritative: encontra a árvore à frente do jogador e valida.
 function TreeSystem.Chop(player: Player)
 	local data = DataService.Get(player)
@@ -482,8 +387,6 @@ function TreeSystem.Init()
 	woodFolder.Name = "WoodDrops"
 	woodFolder.Parent = workspace
 
-	axeTemplate = buildAxeTemplate()
-
 	-- chão de referência
 	local baseplate = workspace:FindFirstChild("Baseplate") :: BasePart?
 	local groundY = baseplate and (baseplate.Position.Y + baseplate.Size.Y / 2) or 0
@@ -504,10 +407,6 @@ function TreeSystem.Init()
 		TreeSystem.Chop(player)
 	end)
 
-	for _, player in Players:GetPlayers() do
-		giveAxe(player)
-	end
-	Players.PlayerAdded:Connect(giveAxe)
 	Players.PlayerRemoving:Connect(function(player)
 		lastChop[player] = nil
 	end)

@@ -1,5 +1,6 @@
 std = "roblox"
 exclude = ["src/server/vendor/**"]
 
-[config]
-empty_if = { enabled = false }
+[lints]
+# UDim2.new é válido e legível; não forçamos fromOffset/fromScale.
+roblox_manual_fromscale_or_fromoffset = "allow"

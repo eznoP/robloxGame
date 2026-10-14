@@ -8,6 +8,11 @@ local RunService = game:GetService("RunService")
 local EVENTS = {
 	"ChopRequest", -- client -> server: jogador pediu para cortar
 	"ChopFeedback", -- server -> client: resultado do golpe (acerto, tier insuficiente, derrubou)
+	"CraftRequest", -- client -> server: craftar um machado (axeId)
+	"EquipRequest", -- client -> server: equipar um machado (axeId)
+	"CraftFeedback", -- server -> client: resultado do craft/equip
+	"StateUpdate", -- server -> client: snapshot (wood, level, materiais, machados, equipado)
+	"RequestState", -- client -> server: pedir um StateUpdate (ao abrir o menu)
 }
 
 local container = script
