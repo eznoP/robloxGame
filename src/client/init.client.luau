@@ -1,7 +1,10 @@
 --!strict
 --!optimize 2
 -- Woodcutter Tycoon — bootstrap do cliente.
--- Fase 0: confirma sincronização. Controllers (Player, Camera, Tool), UI (Fusion),
--- VFX, áudio e animação entram a partir da Fase 1/5.
+-- Inicializa os controllers. UI (Fusion), VFX e áudio entram nas fases seguintes.
+
+local ToolController = require(script.controllers.ToolController)
+
+ToolController.Init()
 
 print("[WoodcutterTycoon] Client pronto.")
