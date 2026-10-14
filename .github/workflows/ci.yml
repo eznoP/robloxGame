@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    name: Lint, type-check e build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar toolchain (Rokit)
+        uses: CompeyDev/setup-rokit@v0.1.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Dependências (Wally)
+        run: wally install
+
+      - name: Formatação (StyLua)
+        run: stylua --check src
+
+      - name: Linter (Selene)
+        run: selene src
+
+      - name: Build (Rojo)
+        run: rojo build --output WoodcutterTycoon.rbxl
