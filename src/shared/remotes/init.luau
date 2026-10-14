@@ -11,8 +11,11 @@ local EVENTS = {
 	"CraftRequest", -- client -> server: craftar um machado (axeId)
 	"EquipRequest", -- client -> server: equipar um machado (axeId)
 	"CraftFeedback", -- server -> client: resultado do craft/equip
-	"StateUpdate", -- server -> client: snapshot (wood, level, materiais, machados, equipado)
+	"StateUpdate", -- server -> client: snapshot (wood, level, materiais, machados, pets, equipados)
 	"RequestState", -- client -> server: pedir um StateUpdate (ao abrir o menu)
+	"PetEquipRequest", -- client -> server: equipar um pet (petId)
+	"PetUnequipRequest", -- client -> server: desequipar o pet
+	"PetDropped", -- server -> client: um pet dropou (petId) para toast
 }
 
 local container = script

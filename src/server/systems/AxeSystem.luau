@@ -12,6 +12,7 @@ local Axes = require(Shared.constants.Axes)
 local Remotes = require(Shared.remotes)
 local AxeFactory = require(script.Parent.AxeFactory)
 local DataService = require(script.Parent.Parent.data.DataService)
+local StateService = require(script.Parent.Parent.data.StateService)
 
 local AxeSystem = {}
 
@@ -41,21 +42,7 @@ local function consume(data: any, cost: { [string]: number })
 	end
 end
 
-local function pushState(player: Player)
-	local data = DataService.Get(player)
-	if not data then
-		return
-	end
-	Remotes.StateUpdate:FireClient(player, {
-		wood = data.wood,
-		level = data.level,
-		xp = data.xp,
-		materials = data.inventory.materials,
-		ownedAxes = data.inventory.axes,
-		equippedAxe = data.equipped.axe,
-	})
-end
-AxeSystem.pushState = pushState
+local pushState = StateService.push
 
 -- Remove qualquer machado e dá o atualmente equipado.
 local function refreshTool(player: Player)

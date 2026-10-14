@@ -5,8 +5,10 @@
 
 local ToolController = require(script.controllers.ToolController)
 local CraftingMenu = require(script.ui.CraftingMenu)
+local PetEquipUI = require(script.ui.PetEquipUI)
 
 ToolController.Init()
 CraftingMenu.Init()
+PetEquipUI.Init()
 
 print("[WoodcutterTycoon] Client pronto.")

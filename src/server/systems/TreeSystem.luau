@@ -17,8 +17,10 @@ local Shared = game.ReplicatedStorage.Shared
 local Types = require(Shared.types)
 local Trees = require(Shared.constants.Trees)
 local Axes = require(Shared.constants.Axes)
+local Pets = require(Shared.constants.Pets)
 local XP = require(Shared.constants.XP)
 local Remotes = require(Shared.remotes)
+local PetSystem = require(script.Parent.PetSystem)
 local TreeFactory = require(script.Parent.TreeFactory)
 local DataService = require(script.Parent.Parent.data.DataService)
 
@@ -158,7 +160,8 @@ local function spawnWood(position: Vector3)
 		end
 		collected = true
 		DataService.Update(player, function(data)
-			data.wood += 1
+			local pet = Pets.Configs[data.equipped.pet]
+			data.wood += pet and pet.baseMultiplier or 1
 			data.stats.woodChopped += 1
 		end)
 		block.CanCollide = false
@@ -191,6 +194,7 @@ local function fell(tree: Model, state: TreeState, fallDir: Vector3, chopper: Pl
 		data.xp += config.woodValue
 		data.level = XP.levelFromTotal(data.xp)
 	end)
+	PetSystem.RollDrop(chopper, config)
 
 	local startPivot = tree:GetPivot()
 	local basePos = startPivot.Position
